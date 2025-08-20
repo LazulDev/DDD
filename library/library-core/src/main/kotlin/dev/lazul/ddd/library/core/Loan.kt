@@ -9,4 +9,10 @@ data class Loan(
     val bookId: Uuid,
     val loanDate: LocalDate,
     val returnDate: LocalDate
-)
+) {
+    fun checkPenalty(user: User) {
+        if(isOverdue() && !user.hasPenalty)
+            user.applyPenalty()
+    }
+    private fun isOverdue(): Boolean = LocalDate.now() > returnDate
+}
